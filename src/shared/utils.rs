@@ -4,8 +4,8 @@ use convert_case::{Case, Converter};
 use once_cell::sync::Lazy;
 use regex::Regex;
 use std::collections::HashSet;
-use swc_atoms::{Atom, JsWord};
 use swc_core::{
+    atoms::{Atom, JsWord},
     common::{comments::Comments, iter::IdentifyLast, BytePos, Span, DUMMY_SP},
     ecma::{
         ast::*,
