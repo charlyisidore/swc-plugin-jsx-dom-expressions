@@ -46,6 +46,12 @@ impl VarBindingCollector {
     }
 }
 
+impl Default for VarBindingCollector {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Visit for VarBindingCollector {
     fn visit_import_decl(&mut self, import_dect: &ImportDecl) {
         for spec in &import_dect.specifiers {

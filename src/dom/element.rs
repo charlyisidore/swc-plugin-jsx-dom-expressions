@@ -80,7 +80,7 @@ where
                 }
                 results.to_be_closed = Some(v)
             } else {
-                results.to_be_closed = info.to_be_closed.clone();
+                results.to_be_closed.clone_from(&info.to_be_closed);
             }
             self.transform_children(&node, &mut results);
             if to_be_closed {
@@ -160,7 +160,7 @@ where
                     _ => {}
                 },
                 Expr::Ident(id) => {
-                    if id.sym.to_string() == "undefined" {
+                    if id.sym == "undefined" {
                         return Expr::Call(CallExpr {
                             span: DUMMY_SP,
                             callee: Callee::Expr(Box::new(Expr::Member(MemberExpr {
@@ -1784,14 +1784,14 @@ where
                 });
                 results
                     .declarations
-                    .extend(child.declarations.clone().into_iter());
-                results.exprs.extend(child.exprs.clone().into_iter());
-                results.dynamics.extend(child.dynamics.clone().into_iter());
+                    .extend(child.declarations.clone());
+                results.exprs.extend(child.exprs.clone());
+                results.dynamics.extend(child.dynamics.clone());
                 results
                     .post_exprs
-                    .extend(child.post_exprs.clone().into_iter());
+                    .extend(child.post_exprs.clone());
                 results.has_custom_element |= child.has_custom_element;
-                temp_path = child.id.clone();
+                temp_path.clone_from(&child.id);
                 next_placeholder = None;
                 i += 1;
             } else if !child.exprs.is_empty() {
@@ -1990,7 +1990,7 @@ where
         false
     }
 
-    fn find_last_element(&mut self, children: &Vec<&JSXElementChild>) -> i32 {
+    fn find_last_element(&mut self, children: &[&JSXElementChild]) -> i32 {
         let mut last_element = -1i32;
         for i in (0i32..children.len() as i32).rev() {
             let child = &children[i as usize];

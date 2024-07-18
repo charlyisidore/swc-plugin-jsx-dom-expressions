@@ -675,7 +675,7 @@ pub fn to_property_name(name: &str) -> String {
     conv.convert(name.to_lowercase())
 }
 
-pub fn wrapped_by_text(list: &Vec<TemplateInstantiation>, start_index: usize) -> bool {
+pub fn wrapped_by_text(list: &[TemplateInstantiation], start_index: usize) -> bool {
     let mut index = start_index;
     let mut wrapped = false;
     while index > 0 {
