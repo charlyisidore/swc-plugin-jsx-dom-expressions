@@ -46,6 +46,12 @@ impl VarBindingCollector {
     }
 }
 
+impl Default for VarBindingCollector {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Visit for VarBindingCollector {
     fn visit_import_decl(&mut self, import_dect: &ImportDecl) {
         for spec in &import_dect.specifiers {
@@ -108,6 +114,7 @@ impl VisitMut for ThisBlockVisitor {
                         init: Some(Box::new(Expr::This(ThisExpr { span: DUMMY_SP }))),
                         definite: false,
                     }],
+                    ..Default::default()
                 }))),
             )
         }
@@ -249,14 +256,11 @@ where
                                                     arg: Some(Box::new(ex1)),
                                                 }),
                                             ],
+                                            ..Default::default()
                                         })),
-                                        is_async: false,
-                                        is_generator: false,
-                                        type_params: None,
-                                        return_type: None,
+                                        ..Default::default()
                                     }))),
-                                    args: vec![],
-                                    type_args: None,
+                                    ..Default::default()
                                 })];
                             }
                             (None, ex0) => expr = vec![ex0],
@@ -283,10 +287,7 @@ where
                                 span: DUMMY_SP,
                                 params: vec![],
                                 body: Box::new(BlockStmtOrExpr::Expr(exp.clone())),
-                                is_async: false,
-                                is_generator: false,
-                                type_params: None,
-                                return_type: None,
+                                ..Default::default()
                             })];
                         }
                     }
@@ -309,10 +310,7 @@ where
                     span: DUMMY_SP,
                     params: vec![],
                     body: Box::new(BlockStmtOrExpr::Expr(expr.clone())),
-                    is_async: false,
-                    is_generator: false,
-                    type_params: None,
-                    return_type: None,
+                    ..Default::default()
                 })],
                 dynamic: true,
                 ..Default::default()
