@@ -17,6 +17,8 @@ use swc_core::{
         visit::{Visit, VisitMut, VisitMutWith, VisitWith},
     },
 };
+
+#[derive(Default)]
 pub struct VarBindingCollector {
     pub const_var_bindings: AHashMap<Id, Option<Expr>>,
     pub function_bindings: AHashSet<Id>,
@@ -24,10 +26,7 @@ pub struct VarBindingCollector {
 
 impl VarBindingCollector {
     pub fn new() -> Self {
-        Self {
-            const_var_bindings: Default::default(),
-            function_bindings: Default::default(),
-        }
+        Self::default()
     }
 
     fn collect_pat(&mut self, pat: &Pat, init: Option<Expr>) {
@@ -43,12 +42,6 @@ impl VarBindingCollector {
             Pat::Rest(rest) => self.collect_pat(&rest.arg, None),
             _ => {}
         };
-    }
-}
-
-impl Default for VarBindingCollector {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
